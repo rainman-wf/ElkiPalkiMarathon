@@ -1,0 +1,30 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.6.21'
+    id "com.github.johnrengelman.shadow" version "7.1.2"
+}
+
+group 'ru.rainman.marathon'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+    implementation 'com.github.pengrad:java-telegram-bot-api:6.0.1'
+    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+}
+
+tasks.withType (JavaCompile) {
+    options.encoding = "CP1251"
+}
+
+task stage (dependsOn: ['shadowJar'])
+
+shadowJar {
+    manifest.attributes('Main-Class': 'application.App')
+    archiveBaseName.set('app')
+    archiveClassifier.set('')
+    archiveVersion.set('')
+}
